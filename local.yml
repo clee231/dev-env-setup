@@ -1,0 +1,5 @@
+---
+- name: Local Provisioning
+  hosts: localhost
+  roles:
+  - common_install
