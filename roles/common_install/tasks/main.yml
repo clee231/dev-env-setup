@@ -29,6 +29,8 @@
     target: install
   when: prompt_check.stat.exists == False
 
+# TODO: Update bash_prompt to add descriptive status icons
+
 # Install nvim
 - name: Install nvim
   ansible.builtin.package:
