@@ -12,5 +12,6 @@
 
 - name: Install nvim
   ansible.builtin.package:
-    name: nvim
+    name: neovim
     state: present
+  become: true
