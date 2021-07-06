@@ -11,8 +11,6 @@
     chdir: /tmp/sexy-bash-prompt
     target: install
 
-# TODO: Update bash_prompt to add descriptive status icons
-
 - name: Patch bash_prompt file
   ansible.posix.patch:
     dest: /home/{{ansible_env.USER}}/.bash_prompt
