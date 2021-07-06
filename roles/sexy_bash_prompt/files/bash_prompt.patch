@@ -1,0 +1,23 @@
+--- /tmp/sexy-bash-prompt/.bash_prompt	2021-07-04 17:16:40.888590674 -0500
++++ /home/chase/.bash_prompt	2021-07-04 17:18:48.716591984 -0500
+@@ -78,13 +78,13 @@
+ 
+ # Set up symbols
+ sexy_bash_prompt_synced_symbol=""
+-sexy_bash_prompt_dirty_synced_symbol="*"
+-sexy_bash_prompt_unpushed_symbol="△"
+-sexy_bash_prompt_dirty_unpushed_symbol="▲"
+-sexy_bash_prompt_unpulled_symbol="▽"
+-sexy_bash_prompt_dirty_unpulled_symbol="▼"
+-sexy_bash_prompt_unpushed_unpulled_symbol="⬡"
+-sexy_bash_prompt_dirty_unpushed_unpulled_symbol="⬢"
++sexy_bash_prompt_dirty_synced_symbol="* (Dirty & Synced)"
++sexy_bash_prompt_unpushed_symbol="△ (Unpushed)"
++sexy_bash_prompt_dirty_unpushed_symbol="▲ (Dirty & Unpushed)"
++sexy_bash_prompt_unpulled_symbol="▽ (Unpulled)"
++sexy_bash_prompt_dirty_unpulled_symbol="▼ (Dirty & Unpulled)"
++sexy_bash_prompt_unpushed_unpulled_symbol="⬡ (Unpushed & Unpulled)"
++sexy_bash_prompt_dirty_unpushed_unpulled_symbol="⬢ (Dirty, Unpushed & Unpulled)"
+ 
+ # Apply symbol overrides that have been set in the environment
+ # DEV: Working unicode symbols can be determined via the following gist

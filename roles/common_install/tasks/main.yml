@@ -11,26 +11,6 @@
   community.crypto.openssh_keypair:
     path: /home/{{ansible_env.USER}}/.ssh/id_rsa
 
-# Install sexy-bash-prompt
-- name: Check if bash prompt is set
-  ansible.builtin.stat:
-    path: /home/{{ansible_env.USER}}/.bash_prompt
-  register: prompt_check
-
-- name: Install sexy bash prompt
-  ansible.builtin.git:
-    repo: 'git@github.com:twolfson/sexy-bash-prompt.git'
-    dest: /tmp/sexy-bash-prompt
-  when: prompt_check.stat.exists == False
-
-- name: Make sexy bash prompt
-  community.general.make:
-    chdir: /tmp/sexy-bash-prompt
-    target: install
-  when: prompt_check.stat.exists == False
-
-# TODO: Update bash_prompt to add descriptive status icons
-
 # Install nvim
 - name: Install nvim
   ansible.builtin.package:

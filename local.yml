@@ -3,3 +3,12 @@
   hosts: localhost
   roles:
   - common_install
+  tasks:
+  - name: Check if bash prompt is set
+    ansible.builtin.stat:
+      path: /home/{{ansible_env.USER}}/.bash_prompt
+    register: prompt_check
+  - name: Install and configure Sexy Bash Prompt
+    include_role:
+      name: sexy_bash_prompt
+    when: not prompt_check.stat.exists

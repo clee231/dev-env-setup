@@ -1,0 +1,19 @@
+---
+# tasks file for sexy_bash_prompt
+# Install sexy-bash-prompt
+- name: Install sexy bash prompt
+  ansible.builtin.git:
+    repo: 'git@github.com:twolfson/sexy-bash-prompt.git'
+    dest: /tmp/sexy-bash-prompt
+
+- name: Make sexy bash prompt
+  community.general.make:
+    chdir: /tmp/sexy-bash-prompt
+    target: install
+
+# TODO: Update bash_prompt to add descriptive status icons
+
+- name: Patch bash_prompt file
+  ansible.posix.patch:
+    dest: /home/{{ansible_env.USER}}/.bash_prompt
+    src: bash_prompt.patch
