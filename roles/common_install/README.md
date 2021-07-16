@@ -1,12 +1,18 @@
-Role Name
-=========
+Common Install
+==============
 
-A brief description of the role goes here.
+This role installs base packages used for my setup.
+As of this writing, this role performs the following actions:
+* Installs:
+  * NeoVim
+  * Tmux
+* Creates:
+  * SSH Key
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+We expect to have Python and Ansible installed for the local provisioning to take place.
 
 Role Variables
 --------------
@@ -23,14 +29,14 @@ Example Playbook
 
 Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
 
-    - hosts: servers
+    - hosts: localhost
       roles:
-         - { role: username.rolename, x: 42 }
+         - { role: common_install, x: 42 }
 
 License
 -------
 
-BSD
+MIT
 
 Author Information
 ------------------
