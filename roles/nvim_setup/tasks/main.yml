@@ -1,0 +1,18 @@
+---
+# tasks file for nvim_setup
+# Install nvim
+- name: Install nvim
+  ansible.builtin.package:
+    name: neovim
+    state: present
+  become: true
+
+- name: Create configuration directory
+  ansible.builtin.file:
+    path: "{{ansible_env.HOME}}/.config/nvim"
+    state: directory
+
+- name: Copy config
+  ansible.builtin.copy:
+    src: init.vim
+    dest: "{{ansible_env.HOME}}/.config/nvim/init.vim"

@@ -11,15 +11,6 @@
   community.crypto.openssh_keypair:
     path: /home/{{ansible_env.USER}}/.ssh/id_rsa
 
-# Install nvim
-- name: Install nvim
-  ansible.builtin.package:
-    name: neovim
-    state: present
-  become: true
-
-# TODO:Configure nvim with plugins and configuration
-
 # Install tmux
 - name: Install tmux
   ansible.builtin.package:

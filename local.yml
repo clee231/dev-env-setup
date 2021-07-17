@@ -12,3 +12,11 @@
     include_role:
       name: sexy_bash_prompt
     when: not prompt_check.stat.exists
+  - name: Check if NeoVim is available
+    shell: command -v nvim > /dev/null 2>&1
+    register: nvim_check
+    ignore_errors: yes
+  - name: Install and configure NeoVim
+    include_role:
+      name: nvim_setup
+    when: nvim_check
