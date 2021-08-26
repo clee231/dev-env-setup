@@ -24,3 +24,20 @@
   become: true
 
 # TODO: Create tmux layouts and config
+
+- name: Creates bashrc load directory
+  file:
+    path: "{{ansible_env.HOME}}/.bashrc.d"
+    state: directory
+
+- name: Update bashrc file to load from .bashrc.d folder
+  blockinfile:
+    path: "{{ ansible_env.HOME }}/.bashrc"
+    block: |
+      while read filename
+      do
+        source "$filename"
+      done < <(find -L ~/.bashrc.d -type f)
+    marker: '# {mark} ANSIBLE MANAGED BLOCK - bashrc'
+    create: yes
+

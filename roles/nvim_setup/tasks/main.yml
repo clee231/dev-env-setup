@@ -16,3 +16,22 @@
   ansible.builtin.copy:
     src: init.vim
     dest: "{{ansible_env.HOME}}/.config/nvim/init.vim"
+
+- name: Check if dropin folder exists
+  ansible.builtin.stat:
+    path: "{{ansible_env.HOME}}/.bashrc.d"
+  register: dropin_check
+
+- name: Add alias via dropin
+  when: set_alias and dropin_check.stat.exists == True
+  ansible.builtin.copy:
+    src: nvim.bashrc
+    dest: "{{ansible_env.HOME}}/.bashrc.d/nvim.bashrc"
+
+- name: Add alias via .bashrc
+  when: set_alias and dropin_check.stat.exists == False
+  blockinfile:
+    path: "{{ansible_env.HOME}}/.bashrc"
+    create: yes
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - Neovim"
+    block: "{{lookup('file', 'nvim.bashrc')}}"
