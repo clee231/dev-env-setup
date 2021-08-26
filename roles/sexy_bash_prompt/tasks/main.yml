@@ -4,7 +4,7 @@
 - name: Install sexy bash prompt
   ansible.builtin.git:
     accept_hostkey: yes
-    repo: 'git@github.com:twolfson/sexy-bash-prompt.git'
+    repo: 'https://github.com/twolfson/sexy-bash-prompt.git'
     dest: /tmp/sexy-bash-prompt
 
 - name: Make sexy bash prompt
