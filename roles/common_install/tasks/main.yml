@@ -6,6 +6,11 @@
     path: /home/{{ansible_env.USER}}/.ssh/id_rsa
   register: keygen_check
 
+- name: Creates user's SSH directory
+  file:
+    path: /home/{{ansible_env.USER}}/.ssh
+    state: directory
+
 - name: Generate SSH key
   when: keygen_check.stat.exists == False
   community.crypto.openssh_keypair:
