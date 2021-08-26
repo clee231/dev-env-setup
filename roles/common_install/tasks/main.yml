@@ -26,11 +26,13 @@
 # TODO: Create tmux layouts and config
 
 - name: Creates bashrc load directory
+  when: install_dropin
   file:
     path: "{{ansible_env.HOME}}/.bashrc.d"
     state: directory
 
 - name: Update bashrc file to load from .bashrc.d folder
+  when: install_dropin
   blockinfile:
     path: "{{ ansible_env.HOME }}/.bashrc"
     block: |
