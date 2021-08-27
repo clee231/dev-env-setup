@@ -13,8 +13,8 @@
     state: directory
 
 - name: Copy config
-  ansible.builtin.copy:
-    src: init.vim
+  ansible.builtin.template:
+    src: init.vim.j2
     dest: "{{ansible_env.HOME}}/.config/nvim/init.vim"
 
 - name: Check if dropin folder exists
@@ -35,3 +35,17 @@
     create: yes
     marker: "# {mark} ANSIBLE MANAGED BLOCK - Neovim"
     block: "{{lookup('file', 'nvim.bashrc')}}"
+
+# Install dein.nvim
+- name: Download dein installer
+  ansible.builtin.get_url:
+    url: "https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh"
+    dest: "{{ansible_env.HOME}}/.config/nvim/dein_installer.sh"
+
+- name: Install dein.nvim
+  ansible.builtin.script:
+    cmd: "{{ansible_env.HOME}}/.config/nvim/dein_installer.sh {{dein_install_directory}}"
+
+- name: Use dein to install plugins
+  ansible.builtin.script:
+    cmd: "nvim +call dein#install() +qall"

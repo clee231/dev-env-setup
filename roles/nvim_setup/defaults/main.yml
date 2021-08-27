@@ -1,3 +1,4 @@
 ---
 # defaults file for nvim_setup
 set_alias: True
+dein_install_directory: "{{ansible_env.HOME}}/.nvim/plugins"
