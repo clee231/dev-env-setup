@@ -47,5 +47,5 @@
     cmd: "{{ansible_env.HOME}}/.config/nvim/dein_installer.sh {{dein_install_directory}}"
 
 - name: Use dein to install plugins
-  ansible.builtin.script:
-    cmd: "nvim +call dein#install() +qall"
+  ansible.builtin.command:
+    cmd: '/usr/sbin/nvim -c "call dein#install()" +qall'
