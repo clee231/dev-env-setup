@@ -1,0 +1,12 @@
+---
+# tasks file for nodejs
+
+- name: Install NodeJS
+  ansible.builtin.package:
+    name: nodejs
+    state: present
+
+- name: Install NPM
+  ansible.builtin.package:
+    name: npm
+    state: present

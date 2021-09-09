@@ -12,11 +12,19 @@
     include_role:
       name: sexy_bash_prompt
     when: not prompt_check.stat.exists
-  - name: Check if NeoVim is available
-    shell: command -v nvim > /dev/null 2>&1
-    register: nvim_check
+  - name: Check if NodeJS tools are available
+    shell: command -v npm > /dev/null 2>&1
+    register: nodejs_check
     ignore_errors: yes
+  - name: Install NodeJS
+    include_role:
+      name: nodejs
+      apply:
+        become: true
+    when: nodejs_check.failed == true
   - name: Install and configure NeoVim
     include_role:
       name: nvim_setup
-    when: nvim_check
+  - name: Install and configure Python and virtualenvs
+    include_role:
+      name: python

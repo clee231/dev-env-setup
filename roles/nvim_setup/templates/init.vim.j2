@@ -23,6 +23,8 @@ endif
 "call dein#add('Shougo/neosnippet-snippets')
 call dein#add('preservim/nerdtree')
 call dein#add('ctrlpvim/ctrlp.vim')
+call dein#add('airblade/vim-gitgutter')
+call dein#add('scrooloose/syntastic')
 
 
 " Required:
@@ -37,4 +39,15 @@ syntax enable
 " call dein#install()
 "endif
 
+" NERDTree
 nnoremap <Tab> :NERDTreeToggle<CR>
+
+" Syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
