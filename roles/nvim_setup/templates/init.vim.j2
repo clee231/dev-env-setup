@@ -26,6 +26,11 @@ call dein#add('ctrlpvim/ctrlp.vim')
 call dein#add('airblade/vim-gitgutter')
 call dein#add('scrooloose/syntastic')
 call dein#add('Shatur/neovim-ayu')
+call dein#add('gregsexton/matchtag')
+call dein#add('neoclide/coc.nvim')
+call dein#add('vim-airline/vim-airline')
+call dein#add('vim-airline/vim-airline-themes')
+call dein#add('mogelbrod/vim-jsonpath')
 
 
 " Required:
@@ -58,3 +63,10 @@ colorscheme ayu-dark
 
 " Set number bar
 set number
+
+" enable true colors support
+set termguicolors
+
+" set airline theme
+let g:airline_theme='ayu_dark'
+
