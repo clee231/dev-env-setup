@@ -53,7 +53,7 @@
   ansible.builtin.script:
     cmd: "{{ansible_env.HOME}}/.config/nvim/dein_installer.sh {{dein_install_directory}}"
   args:
-    creates: "{{ansible_env.HOME}}/.config/nvim/dein_installer.sh"
+    creates: "{{dein_install_directory}}/repos/github.com/Shougo/dein.vim/autoload/dein.vim"
 
 - name: Use dein to install plugins
   when: install_plugins
