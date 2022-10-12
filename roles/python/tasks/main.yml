@@ -19,7 +19,7 @@
 
 - name: Install pyenv
   ansible.builtin.package:
-    name: python-pyenv
+    name: pyenv
   become: yes
 
 - name: Check if dropin folder exists
