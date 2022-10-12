@@ -10,10 +10,12 @@
   ansible.builtin.package:
     name: python-pip
     state: present
+  become: yes
 
 - name: Install pipenv
-  ansible.builtin.pip:
-    name: pipenv
+  ansible.builtin.package:
+    name: python-pipenv
+  become: yes
 
 - name: Install pyenv
   ansible.builtin.package:
