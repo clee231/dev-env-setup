@@ -27,10 +27,11 @@ call dein#add('airblade/vim-gitgutter')
 call dein#add('scrooloose/syntastic')
 call dein#add('Shatur/neovim-ayu')
 call dein#add('gregsexton/matchtag')
-call dein#add('neoclide/coc.nvim')
+call dein#add('neoclide/coc.nvim', { 'merged': 0, 'rev': 'release' })
 call dein#add('vim-airline/vim-airline')
 call dein#add('vim-airline/vim-airline-themes')
 call dein#add('mogelbrod/vim-jsonpath')
+call dein#add('hashivim/vim-terraform')
 
 
 " Required:
@@ -47,6 +48,9 @@ syntax enable
 
 " NERDTree
 nnoremap <Tab> :NERDTreeToggle<CR>
+
+" Remap Visual Block mode to q, since Ctrl+V is paste
+nnoremap q <c-v>
 
 " Syntastic
 set statusline+=%#warningmsg#
