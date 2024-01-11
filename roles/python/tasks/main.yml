@@ -10,14 +10,16 @@
   ansible.builtin.package:
     name: python-pip
     state: present
+  become: yes
 
 - name: Install pipenv
-  ansible.builtin.pip:
-    name: pipenv
+  ansible.builtin.package:
+    name: python-pipenv
+  become: yes
 
 - name: Install pyenv
   ansible.builtin.package:
-    name: python-pyenv
+    name: pyenv
   become: yes
 
 - name: Check if dropin folder exists
@@ -29,7 +31,7 @@
   when: set_alias and dropin_check.stat.exists == True
   ansible.builtin.copy:
     src: python.bashrc
-    dest: "{{ansible_env.HOME}}/.bashrc.d/nvim.bashrc"
+    dest: "{{ansible_env.HOME}}/.bashrc.d/python.bashrc"
 
 - name: Add alias via .bashrc
   when: set_alias and dropin_check.stat.exists == False
