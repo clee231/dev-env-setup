@@ -45,15 +45,13 @@
 - name: Download dein installer
   when: install_plugins and dein_check.stat.exists == False
   ansible.builtin.get_url:
-    url: "https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh"
+    url: "https://raw.githubusercontent.com/Shougo/dein-installer.vim/master/installer.sh"
     dest: "{{ansible_env.HOME}}/.config/nvim/dein_installer.sh"
 
 - name: Install dein.nvim
   when: install_plugins
   ansible.builtin.script:
-    cmd: "{{ansible_env.HOME}}/.config/nvim/dein_installer.sh {{dein_install_directory}}"
-  args:
-    creates: "{{ansible_env.HOME}}/.config/nvim/dein_installer.sh"
+    cmd: "{{ansible_env.HOME}}/.config/nvim/dein_installer.sh --use-neovim-config {{dein_install_directory}}"
 
 - name: Use dein to install plugins
   when: install_plugins
