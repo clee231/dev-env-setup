@@ -13,9 +13,9 @@
     state: directory
 
 - name: Copy config
-  ansible.builtin.template:
-    src: init.vim.j2
-    dest: "{{ansible_env.HOME}}/.config/nvim/init.vim"
+  ansible.builtin.copy:
+    src: init.lua
+    dest: "{{ansible_env.HOME}}/.config/nvim/init.lua"
 
 - name: Check if dropin folder exists
   ansible.builtin.stat:
@@ -35,30 +35,6 @@
     create: yes
     marker: "# {mark} ANSIBLE MANAGED BLOCK - Neovim"
     block: "{{lookup('file', 'nvim.bashrc')}}"
-
-# Install dein.nvim
-- name: Check if dein installer exists
-  ansible.builtin.stat:
-    path: "{{ansible_env.HOME}}/.config/nvim/dein_installer.sh"
-  register: dein_check
-
-- name: Download dein installer
-  when: install_plugins and dein_check.stat.exists == False
-  ansible.builtin.get_url:
-    url: "https://raw.githubusercontent.com/Shougo/dein-installer.vim/master/installer.sh"
-    dest: "{{ansible_env.HOME}}/.config/nvim/dein_installer.sh"
-
-- name: Install dein.nvim
-  when: install_plugins
-  ansible.builtin.script:
-    cmd: "{{ansible_env.HOME}}/.config/nvim/dein_installer.sh {{dein_install_directory}} --use-neovim-config"
-  args:
-    creates: "{{dein_install_directory}}/repos/github.com/Shougo/dein.vim/autoload/dein.vim"
-
-- name: Use dein to install plugins
-  when: install_plugins
-  ansible.builtin.command:
-    cmd: 'nvim -c "call dein#install()" +qall'
 
 - name: Install Syntastic checkers - YAML
   when: install_plugins
