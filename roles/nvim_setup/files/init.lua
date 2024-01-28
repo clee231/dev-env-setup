@@ -2,29 +2,31 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", -- latest stable release
-    lazypath,
-  })
+      "git",
+      "clone",
+      "--filter=blob:none",
+      "https://github.com/folke/lazy.nvim.git",
+      "--branch=stable", -- latest stable release
+      lazypath,
+    })
 end
 vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
-'preservim/nerdtree',
-'ctrlpvim/ctrlp.vim',
-'airblade/vim-gitgutter',
-'dense-analysis/ale',
-'Shatur/neovim-ayu',
-'gregsexton/matchtag',
-{'neoclide/coc.nvim', branch = 'release' },
-'vim-airline/vim-airline',
-'vim-airline/vim-airline-themes',
-'mogelbrod/vim-jsonpath',
-'hashivim/vim-terraform',
-'sheerun/vim-polyglot'
+  'preservim/nerdtree',
+  'ctrlpvim/ctrlp.vim',
+  'airblade/vim-gitgutter',
+  'dense-analysis/ale',
+  'Shatur/neovim-ayu',
+  'gregsexton/matchtag',
+  {'neoclide/coc.nvim', branch = 'release' },
+  'vim-airline/vim-airline',
+  'vim-airline/vim-airline-themes',
+  'mogelbrod/vim-jsonpath',
+  'hashivim/vim-terraform',
+  'sheerun/vim-polyglot',
+  'huggingface/llm.nvim',
+  'dhruvasagar/vim-table-mode'
 }
 
 require("lazy").setup(plugins, opts)
@@ -33,6 +35,26 @@ require("lazy").setup(plugins, opts)
 -- neovim-ayu config - START
 require("ayu").colorscheme()
 -- neovim-ayu config - END
+
+-- hf/llm.nvim config - START
+local llm = require('llm')
+
+llm.setup({
+    tokens_to_clear = { "<EOT>" },
+    fim = {
+      enabled = true,
+      prefix = "<PRE> ",
+      middle = " <MID>",
+      suffix = " <SUF>",
+    },
+    model = "codellama/CodeLlama-13b-hf",
+    context_window = 4096,
+    tokenizer = {
+      repository = "codellama/CodeLlama-13b-hf",
+    },
+    enable_suggestions_on_startup = false
+  })
+-- hf/llm.nvim config - END
 
 -- Personal config - START
 
@@ -64,8 +86,8 @@ vim.opt.signcolumn = "yes"
 local keyset = vim.keymap.set
 -- Autocomplete
 function _G.check_back_space()
-    local col = vim.fn.col('.') - 1
-    return col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') ~= nil
+  local col = vim.fn.col('.') - 1
+  return col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') ~= nil
 end
 
 -- Use Tab for trigger completion with characters ahead and navigate
@@ -100,14 +122,14 @@ keyset("n", "gr", "<Plug>(coc-references)", {silent = true})
 
 -- Use K to show documentation in preview window
 function _G.show_docs()
-    local cw = vim.fn.expand('<cword>')
-    if vim.fn.index({'vim', 'help'}, vim.bo.filetype) >= 0 then
-        vim.api.nvim_command('h ' .. cw)
-    elseif vim.api.nvim_eval('coc#rpc#ready()') then
-        vim.fn.CocActionAsync('doHover')
-    else
-        vim.api.nvim_command('!' .. vim.o.keywordprg .. ' ' .. cw)
-    end
+  local cw = vim.fn.expand('<cword>')
+  if vim.fn.index({'vim', 'help'}, vim.bo.filetype) >= 0 then
+    vim.api.nvim_command('h ' .. cw)
+  elseif vim.api.nvim_eval('coc#rpc#ready()') then
+    vim.fn.CocActionAsync('doHover')
+  else
+    vim.api.nvim_command('!' .. vim.o.keywordprg .. ' ' .. cw)
+  end
 end
 keyset("n", "K", '<CMD>lua _G.show_docs()<CR>', {silent = true})
 
@@ -118,7 +140,7 @@ vim.api.nvim_create_autocmd("CursorHold", {
     group = "CocGroup",
     command = "silent call CocActionAsync('highlight')",
     desc = "Highlight symbol under cursor on CursorHold"
-})
+  })
 
 
 -- Symbol renaming
@@ -136,7 +158,7 @@ vim.api.nvim_create_autocmd("FileType", {
     pattern = "typescript,json",
     command = "setl formatexpr=CocAction('formatSelected')",
     desc = "Setup formatexpr specified filetype(s)."
-})
+  })
 
 -- Update signature help on jump placeholder
 vim.api.nvim_create_autocmd("User", {
@@ -144,7 +166,7 @@ vim.api.nvim_create_autocmd("User", {
     pattern = "CocJumpPlaceholder",
     command = "call CocActionAsync('showSignatureHelp')",
     desc = "Update signature help on jump placeholder"
-})
+  })
 
 -- Apply codeAction to the selected region
 -- Example: `<leader>aap` for current paragraph
@@ -186,9 +208,9 @@ local opts = {silent = true, nowait = true, expr = true}
 keyset("n", "<C-f>", 'coc#float#has_scroll() ? coc#float#scroll(1) : "<C-f>"', opts)
 keyset("n", "<C-b>", 'coc#float#has_scroll() ? coc#float#scroll(0) : "<C-b>"', opts)
 keyset("i", "<C-f>",
-       'coc#float#has_scroll() ? "<c-r>=coc#float#scroll(1)<cr>" : "<Right>"', opts)
+  'coc#float#has_scroll() ? "<c-r>=coc#float#scroll(1)<cr>" : "<Right>"', opts)
 keyset("i", "<C-b>",
-       'coc#float#has_scroll() ? "<c-r>=coc#float#scroll(0)<cr>" : "<Left>"', opts)
+  'coc#float#has_scroll() ? "<c-r>=coc#float#scroll(0)<cr>" : "<Left>"', opts)
 keyset("v", "<C-f>", 'coc#float#has_scroll() ? coc#float#scroll(1) : "<C-f>"', opts)
 keyset("v", "<C-b>", 'coc#float#has_scroll() ? coc#float#scroll(0) : "<C-b>"', opts)
 
