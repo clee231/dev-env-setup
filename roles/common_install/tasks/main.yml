@@ -1,10 +1,15 @@
 ---
 # tasks file for common_install
 # Create SSH keygen
-- name: Check if SSH key exists
+- name: Check if SSH key exists - RSA
   ansible.builtin.stat:
     path: /home/{{ansible_env.USER}}/.ssh/id_rsa
-  register: keygen_check
+  register: keygen_check_rsa
+
+- name: Check if SSH key exists - ED25519
+  ansible.builtin.stat:
+    path: /home/{{ansible_env.USER}}/.ssh/id_ed25519
+  register: keygen_check_ed25519
 
 - name: Creates user's SSH directory
   file:
@@ -12,9 +17,10 @@
     state: directory
 
 - name: Generate SSH key
-  when: keygen_check.stat.exists == False
+  when: keygen_check_rsa.stat.exists == False and keygen_check_ed25519.stat.exists == False
   community.crypto.openssh_keypair:
     path: /home/{{ansible_env.USER}}/.ssh/id_rsa
+    type: ed25519
 
 # Install tmux
 - name: Install tmux
